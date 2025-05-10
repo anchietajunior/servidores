@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  ip: MyString
+  region: 1
+  frabricated_at: 2025-05-10 11:53:33
+
+two:
+  name: MyString
+  ip: MyString
+  region: 1
+  frabricated_at: 2025-05-10 11:53:33
