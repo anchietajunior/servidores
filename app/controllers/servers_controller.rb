@@ -1,9 +1,35 @@
+
 class ServersController < ApplicationController
   before_action :set_server, only: %i[ show edit update destroy ]
 
   # GET /servers or /servers.json
   def index
     @servers = Server.all.order(created_at: :desc)
+  end
+
+  def index_pdf
+    @servers = Server.all.order(created_at: :desc)
+
+    pdf = Prawn::Document.new
+    pdf.text "Lista de Servidores", size: 20, style: :bold
+    pdf.move_down 20
+
+    table_data = [ [ "Nome", "IP", "Região", "Criado em" ] ]
+    @servers.each do |server|
+      table_data << [
+        server.name,
+        server.ip,
+        server.region.humanize,
+        server.created_at.strftime("%d/%m/%Y")
+      ]
+    end
+
+    pdf.table(table_data, header: true, row_colors: [ "F0F0F0", "FFFFFF" ])
+
+    send_data pdf.render,
+              filename: "servidores.pdf",
+              type: "application/pdf",
+              disposition: "attachment"
   end
 
   # GET /servers/1 or /servers/1.json
